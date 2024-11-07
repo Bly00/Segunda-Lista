@@ -5,13 +5,26 @@ public class Arvore {
     public static void main(String[] args) {
         
         Arvore tree = new Arvore();
+        Arvore tree2 = new Arvore();
 
         tree.addNo(true, 10, null);
         tree.addNo(true, 20, tree.raiz);
         tree.addNo(false, 30, tree.raiz);
-        tree.addNo(true, 40, tree.raiz.esq);
 
+        tree2.addNo(true, 10, null);
+        tree2.addNo(true, 50, tree2.raiz);
+        tree2.addNo(false, 30, tree2.raiz);
+       
+
+        tree.concatenar(tree2, tree.raiz.esq);
+        
+        
+     
         mostrarArvore(tree.raiz);
+       
+        
+
+        System.out.println("Tamanho: " + tree.numNo());
 
     }
 
@@ -84,14 +97,32 @@ public class Arvore {
 
     }
 
-    public int altura(){
+    public int numNo(No no){
 
-        int size, atual;
+        if(no == null){
+            return 0;
+        }
+        return 1 + numNo(no.esq) + numNo(no.dir);
+    }
 
-        
+    public int numNo(){
+        return numNo(this.raiz);
+    }
 
-        return 0;
+    public void concatenar(Arvore extensao, No noAtual){
+
+        if(raiz == null){
+            return;
+        }
+        if(noAtual == null){
+            System.out.println("No nao existe");
+            return;
+        }
+
+        noAtual = extensao.raiz;
 
     }
+
     
+
 }
