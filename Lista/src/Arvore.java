@@ -8,32 +8,94 @@ public class Arvore {
 
     public static void main(String[] args) {
         
-        Arvore tree = new Arvore();
-        Arvore tree2 = new Arvore();
+       Arvore tree = new Arvore();
 
+       List<No> nos = new ArrayList<>();
 
+       No no1 = new No();
+       No no2 = new No();
+       No no3 = new No();
+       No no4 = new No();
+       No no5 = new No();
+       No no6 = new No();
+       No no7 = new No();
+       No no8 = new No();
+       No no9 = new No();
+       No no10 = new No();
+       No no11 = new No();
+       No no12 = new No();
+       No no13 = new No();
+       No no14 = new No();
+       No no15 = new No();
+       No no16 = new No();
+       No no17 = new No();
+       No no18 = new No();
+       No no19 = new No();
+       No no20 = new No();
+         
+       no1.valor = 10;
+       no2.valor = 20;
+       no3.valor = 30;
+       no4.valor = 40;
+       no5.valor = 50;
+       no6.valor = 60;
+       no7.valor = 70;
+       no8.valor = 80;
+       no9.valor = 90;
+       no10.valor = 100;
+       no11.valor = 110;
+       no12.valor = 120;
+       no13.valor = 130;
+       no14.valor = 140;
+       no15.valor = 150;
+       no16.valor = 160;
+       no17.valor = 170;
+       no18.valor = 180;
+       no19.valor = 190;
+       no20.valor = 200;
+      
 
-        tree.addNo(true, 10, null);
-        tree.addNo(true, 20, tree.raiz);
-        tree.addNo(false, 30, tree.raiz);
+       nos.add(no1);
+       nos.add(no2);
+       nos.add(no3);
+       nos.add(no4);
+       nos.add(no5);
+       nos.add(no6);
+       nos.add(no7);
+       nos.add(no8);
+       nos.add(no9);
+       nos.add(no10);
+       nos.add(no11);
+       nos.add(no12);
+       nos.add(no13);
+       nos.add(no14);
+       nos.add(no15);
+       nos.add(no16);
+       nos.add(no17);
+       nos.add(no18);
+       nos.add(no19);
+       nos.add(no20);
 
+       int[] x = { 30, 50, 120, 230};
 
-        tree2.addNo(true, 80, tree2.raiz);
-        tree2.addNo(true, 20, tree2.raiz);
-        tree2.addNo(false, 30, tree2.raiz);
-        tree2.addNo(true, 40, tree2.raiz.esq);
+       tree = tree.addLista(nos);
 
-        tree.remover(tree.raiz, tree.raiz.dir);
+       System.out.println("Arvore: ");
+       mostrarArvore(tree.raiz);
 
-        tree.concatenar(tree.raiz, tree.raiz, tree2);
+       System.out.print("Valores procurados:");
+       for(int ints: x){
+        System.out.print(" " + ints);
+       }
 
-        mostrarArvore(tree.raiz);
+       System.out.println();
 
-        No  no = tree.noImcompleto(tree.raiz);
+       System.out.print("Valores encontrados:");
 
-        System.out.println("No incompleto: " + no.valor);
-
-
+       for(No n : tree.encontreNum(x, tree.raiz)){
+            System.out.print(" " + n.valor);
+       }
+       
 
     }
 
@@ -251,29 +313,63 @@ public class Arvore {
 
     }
 
-    public No noImcompleto(No raiz){
+    public No noIncompleto(No raiz){
 
-        Random ram =new Random();
+        Random ram = new Random();
 
         if(raiz == null){
              return null;
         }
 
+
+
         if(raiz.esq == null || raiz.dir == null){
             return raiz;
         }
 
-        if(ram.nextBoolean() == true){
-            noImcompleto(raiz.esq);
-        }else{
-            noImcompleto(raiz.dir);
+        if(ram.nextBoolean()){
+           
+            No a = noIncompleto(raiz.esq);
+            if(a.esq == null || a.dir == null)
+            return a;
+
+        }else{   
+
+            No a = noIncompleto(raiz.dir);
+            if(a.esq == null || a.dir == null)
+            return a;
+
         }
 
-        return raiz;
+        
+        return null;
 
     }
 
+    public Arvore addLista(List<No> nós){
 
+        Arvore treeList = new Arvore();
+        treeList.raiz = new No();
+
+        treeList.raiz.valor = nós.get(0).valor;
+
+        nós.remove(0);
+
+        for(No x : nós){
+
+            No noIncompleto = treeList.noIncompleto(treeList.raiz);
+
+            if(noIncompleto.esq == null){
+                treeList.addNo(true, x.valor, noIncompleto);
+            }else if(noIncompleto.dir == null){
+                treeList.addNo(false, x.valor, noIncompleto);
+            }
+
+        }
+
+        return treeList;
+
+    }
     
 
 }
