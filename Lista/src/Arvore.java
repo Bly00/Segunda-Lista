@@ -5,6 +5,27 @@ import java.util.Random;
 public class Arvore {
     
     No raiz;
+   
+
+    public static void main(String[] args) {
+        
+        Arvore tree = new Arvore();
+
+        CriteriaClassica cC = new CriteriaClassica();
+        CriteriaInversa cI = new CriteriaInversa();
+
+        tree.addNo(false, 10, null);
+        tree.addNo(true, 20, tree.raiz);
+        tree.addNo(false, 30, tree.raiz);
+
+        System.out.println(cC.apply(tree.raiz, 15).valor);
+        System.out.println(cI.apply(tree.raiz, 5).valor);
+
+        tree.mostrarArvore();
+
+    }
+
+    
 
     //Metodos publicos//
 
