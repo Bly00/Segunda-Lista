@@ -8,18 +8,24 @@ public class Arvore {
    
 
     public static void main(String[] args) {
-        
-        Arvore tree = new Arvore();
 
-        CriteriaClassica cC = new CriteriaClassica();
-        CriteriaInversa cI = new CriteriaInversa();
+        Arvore tree = new Arvore();
 
         tree.addNo(false, 10, null);
         tree.addNo(true, 20, tree.raiz);
         tree.addNo(false, 30, tree.raiz);
 
-        System.out.println(cC.apply(tree.raiz, 15).valor);
-        System.out.println(cI.apply(tree.raiz, 5).valor);
+
+
+        List<Integer> a = new ArrayList<>();
+
+        a.add(10);
+        a.add(20);
+        a.add(30);
+        a.add(40);
+        a.add(50);
+
+        tree.addLista(a);
 
         tree.mostrarArvore();
 
@@ -94,28 +100,25 @@ public class Arvore {
     }
 
 
-    public static Arvore addLista(List<No> nós){
+    public void addLista(List<Integer> elementos){
 
-        Arvore treeList = new Arvore();
-        treeList.raiz = new No();
+            Random r = new Random();
 
-        treeList.raiz.valor = nós.get(0).valor;
+            while(!elementos.isEmpty()) {
 
-        nós.remove(0);
+                No noInc = this.noIncompleto();
 
-        for(No x : nós){
+                if(noInc.esq == null && noInc.dir == null){
+                    this.addNo(r.nextBoolean(), elementos.getFirst(), noInc);
+                }else{
+                    this.addNo(noInc.esq == null, elementos.getFirst(), noInc);
+                }
 
-            No noIncompleto = treeList.noIncompleto(treeList.raiz);
+                elementos.removeFirst();
 
-            if(noIncompleto.esq == null){
-                treeList.addNo(true, x.valor, noIncompleto);
-            }else if(noIncompleto.dir == null){
-                treeList.addNo(false, x.valor, noIncompleto);
             }
 
-        }
 
-        return treeList;
     }
 
     //----------------------------------------------
